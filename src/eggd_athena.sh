@@ -9,14 +9,18 @@ main() {
     dx download "$pb_bed"
 
     if "$build"; then
-        dx download "$build" -o build
+        dx download "$build"
     fi
     
+    # download SNPs if given to SNPs dir
+    mkdir snps && cd snps
+
     for i in "${!snps[@]}"
     do
-        dx download "${snps[$i]}" -o "snps-$i"
-        echo "$snps-$i"
+        dx download "${snps[$i]}"
     done
+    ls
+    cd ~/
 
     # set up bedtools
     gunzip bedtools.static.binary.gz
@@ -30,11 +34,13 @@ main() {
 
     # unzip athena and install requirements
     # unzip athena-master.zip
+    # sudo chmod -R 775 athena
     # ./miniconda3/bin/pip install -r athena/requirements.txt
-    
+
+    # DEVELOPMENT - unzip athena-devlopment and install requirements
     unzip athena-development.zip
-    ./miniconda3/bin/pip install -qr athena-development/requirements.txt
     sudo chmod -R 775 athena-development
+    ./miniconda3/bin/pip install -qr athena-development/requirements.txt
 
     echo "Finished setup."
 
@@ -48,7 +54,7 @@ main() {
     stats_args=""
 
     if [ "$thresholds" ]; then stats_args+=" --thresholds $thresholds"; fi
-    if [ "$build_name" ]; then stats_args+=" --build $build_name"; fi
+    if [ "$build_name" ]; then stats_args+=" --build ~/$build_name"; fi
     if [ "$name" ]; then stats_args+=" --outfile $name"; fi
     
     stats_cmd="--file $annotated_bed"
@@ -68,7 +74,8 @@ main() {
     if [ "$cutoff_threshold" ]; then report_args+=" --threshold $cutoff_threshold"; fi
     if [ "$name" ]; then report_args+=" --sample_name $name"; fi
     if [ "${!snps[@]}" ]; then 
-        snp_vcfs=$(for v in "${!snps@}";do echo "$v "; done)
+        snp_vcfs=$(for f in "~/snps/*.vcf"; do echo "$f "; done)
+        echo $snp_vcfs
         report_args+=" --snps $snp_vcfs";
     fi
 
@@ -80,7 +87,6 @@ main() {
     ./miniconda3/bin/python $report_cmd
     
     report=$(ls ./athena-development/output/*coverage_report.html)
-
 
     echo "Completed. Uploading files"
 
