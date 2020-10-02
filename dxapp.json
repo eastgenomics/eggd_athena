@@ -1,0 +1,148 @@
+{
+  "name": "eggd_athena_v1.0.0",
+  "title": "eggd_athena_v1.0.0",
+  "summary": "DNAnexus app of Athena",
+  "dxapi": "1.0.0",
+  "properties": {
+    "githubRelease": "v1.0.1"
+    },
+  "inputSpec": [
+    {
+      "name": "panel_bed",
+      "label": "BED file of panel",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "exons_nirvana",
+      "label": "Exons nirvana file (from 001_References)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "pb_bed",
+      "label": "Per base coverage bed file (output from mosdepth)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "thresholds",
+      "label": "String of comma seperated thresholds at which to calculate coverage",
+      "class": "string",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "build",
+      "label": "Reference build text file (output from mosdepth)",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "name",
+      "label": "Sample name, used in report and for naming output files",
+      "class": "string",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "cutoff_threshold",
+      "label": "Threshold to define sub-optimal coverage",
+      "class": "int",
+      "optional": true,
+      "default": 20,
+      "help": ""
+    },
+    {
+      "name": "snps",
+      "label": "SNP VCFs to check coverage for",
+      "class": "array:file",
+      "optional": true,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "exon_stats",
+      "label": "Exon statistics file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "gene_stats",
+      "label": "Gene statistics file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "report",
+      "label": "HTML coverage report",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "annotated_bed",
+      "label": "Annotated BED file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/eggd_athena.sh",
+    "distribution": "Ubuntu",
+    "release": "16.04",
+    "version": "1"
+  },
+  "access": {
+    "network": [
+      "*"
+    ],
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-central-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x8"
+        }
+      }
+    }
+  }
+}
