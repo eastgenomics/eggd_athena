@@ -8,10 +8,11 @@ main() {
     dx download "$exons_nirvana"
     dx download "$pb_bed"
 
-    if "$build"; then
+    if [ ${build+x} ]; then
+        echo "BUILD FILE PASSED"
         dx download "$build"
     fi
-    
+
     # download SNPs if given to SNPs dir
     mkdir snps && cd snps
 
@@ -19,6 +20,7 @@ main() {
     do
         dx download "${snps[$i]}"
     done
+    
     ls
     cd ~/
 
@@ -49,17 +51,19 @@ main() {
     ls
     annotated_bed=$(ls ./*_annotated.bed)
 
+    # if sample naming given replace spaces with "_"
+    if [ "$name" ]; then name=${name// /_}; fi
 
     # build string of inputs to pass to stats script
     stats_args=""
 
     if [ "$thresholds" ]; then stats_args+=" --thresholds $thresholds"; fi
-    if [ "$build_name" ]; then stats_args+=" --build ~/$build_name"; fi
-    if [ "$name" ]; then stats_args+=" --outfile $name"; fi
+    if [ "$build_name" ]; then stats_args+=" --build $build_name"; fi
+    if [ "$name" ]; then stats_args+=" --outfile ${name}"; fi
     
     stats_cmd="--file $annotated_bed"
     stats_cmd+=$stats_args
-    echo "stats cmd" $stats_cms
+    echo "stats cmd" $stats_cmd
     
     # generate single sample stats
     ./miniconda3/bin/python ./athena-development/bin/coverage_stats_single.py $stats_cmd
@@ -67,14 +71,13 @@ main() {
     exon_stats=$(ls ./athena-development/output/*exon_stats.tsv)
     gene_stats=$(ls ./athena-development/output/*gene_stats.tsv)
 
-
     # build string of inputs for report script
     report_args=""
 
     if [ "$cutoff_threshold" ]; then report_args+=" --threshold $cutoff_threshold"; fi
     if [ "$name" ]; then report_args+=" --sample_name $name"; fi
     if [ "${!snps[@]}" ]; then 
-        snp_vcfs=$(for f in "~/snps/*.vcf"; do echo "$f "; done)
+        snp_vcfs=$(find ~/snps/ -name "*.vcf")
         echo $snp_vcfs
         report_args+=" --snps $snp_vcfs";
     fi

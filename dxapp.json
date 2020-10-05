@@ -22,6 +22,12 @@
       "label": "Exons nirvana file (from 001_References)",
       "class": "file",
       "optional": false,
+      "suggestions": [
+        {
+          "project": "project-Fkb6Gkj433GVVvj73J7x8KbV",
+          "path": "/annotation/b37/"
+        }
+      ],
       "patterns": [
         "*"
       ],
