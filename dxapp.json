@@ -48,6 +48,7 @@
       "label": "String of comma seperated thresholds at which to calculate coverage",
       "class": "string",
       "optional": true,
+      "default": "10, 20, 30, 50, 100",
       "help": ""
     },
     {
@@ -74,6 +75,21 @@
       "optional": true,
       "default": 20,
       "help": ""
+    },
+    {
+      "name": "limit",
+      "label": "Number of genes at which to skip full gene plot generation, for large panels this may take a long time.",
+      "class": "int",
+      "optional": true,
+      "default": -1,
+      "help": ""
+    },
+    {
+      "name": "panel",
+      "label": "Display panel",
+      "class": "boolean",
+      "default": true,
+      "help": "Display panel(s) / gene(s) from name of panel bed file. Default: True"
     },
     {
       "name": "snps",
@@ -127,7 +143,7 @@
   "runSpec": {
     "timeoutPolicy": {
       "*": {
-        "hours": 48
+        "hours": 6
       }
     },
     "interpreter": "bash",
@@ -146,7 +162,7 @@
     "aws:eu-central-1": {
       "systemRequirements": {
         "*": {
-          "instanceType": "mem1_ssd1_v2_x8"
+          "instanceType": "mem3_ssd1_x8"
         }
       }
     }
