@@ -153,9 +153,6 @@
     "version": "1"
   },
   "access": {
-    "network": [
-      "*"
-    ],
     "project": "CONTRIBUTE"
   },
   "regionalOptions": {
