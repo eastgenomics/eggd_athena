@@ -53,10 +53,6 @@ main() {
     bash ./athena-development/bin/annotate_bed.sh -i "$panel_bed_name" -g "$exons_nirvana_name" -b "$pb_bed_name"
     annotated_bed=$(find . -name "*_annotated.bed")
 
-    echo "name $name"
-    echo "build $buildname"
-    echo "thresholds $thresholds"
-
     # if sample naming given replace spaces with "_"
     if [ "$name" ]; then name=${name// /_}; fi
 
