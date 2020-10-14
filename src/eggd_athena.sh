@@ -42,8 +42,8 @@ main() {
     # install required python packages from local packages dir
     echo "Installing python packages"
     cd packages
-    ~/miniconda3/bin/pip install -q certifi-* pytz-* python_dateutil-* pysam-* cycler-* kiwisolver-* Pillow* \
-        retrying-* pyparsing-* numpy-* SQLAlchemy-* pandas-* pandasql-* matplotlib-* plotly-* pybedtools-*
+    ~/miniconda3/bin/pip install -q certifi-* MarkupSafe-* pytz-* python_dateutil-* pysam-* cycler-* Jinja2-* kiwisolver-* \
+    Pillow* retrying-* pyparsing-* numpy-* SQLAlchemy-* pandas-* pandasql-* matplotlib-* plotly-* pybedtools-*
     cd ~
 
     echo "Finished setup. Beginning analysis."
