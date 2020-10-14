@@ -29,6 +29,8 @@ Optional inputs:
 - name: sample name, used to name output files and within report title. If not given this will be parsed from the per base coverage bed.
 - cutoff threshold: threshold at which to define sub-optimal coverage (must be one of the threshold values; default: 20)
 - snps: VCF(s) of SNPs for which to calculate coverage for (i.e. HGMD, ClinVar)
+- limit: number of genes in panel at which to not generate full gene plots, for large panels this may take a long time and make the reports unuseably large.
+- panel: boolean option to display panel used in report (default: True)
 
 <br>
 
