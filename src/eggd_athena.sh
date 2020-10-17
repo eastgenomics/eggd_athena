@@ -8,11 +8,16 @@ main() {
     # download inputs
     dx download "$panel_bed"
     dx download "$exons_nirvana"
-    dx download "$pb_bed"
 
-    if [ ${build+x} ]; then
-        dx download "$build"
-    fi
+    # download mosdepth files
+    for i in "${!mosdepth_files[@]}"
+    do
+        dx download "${mosdepth_files[$i]}"
+    done
+
+    # set per base and build files from downloaded mosdepth output
+    pb_bed=$(find . -name "*.per-base.bed.gz")
+    build=$(find . -name "*.reference_build.txt")
 
     # download SNPs if given to SNPs dir
     mkdir snps && cd snps
@@ -34,10 +39,15 @@ main() {
     gunzip Miniconda3-latest-Linux-x86_64.sh.gz
     bash ~/Miniconda3-latest-Linux-x86_64.sh -b
 
-    # unzip athena and install requirements
-    # should include .zip of athena from releases
-    unzip athena-*.zip
-    sudo chmod -R 775 athena-*
+    # get athena name with version from downloaded tar
+    athena_dir=$(find . -name athena-*)
+    athena_dir=${athena_dir/.tar.gz/}
+
+    # untar athena and install requirements
+    # should include tar of athena from releases
+    tar -xf athena-*.tar.gz
+    # mv athena $athena_dir
+    sudo chmod -R 775 $athena_dir
     
     # install required python packages from local packages dir
     echo "Installing python packages"
@@ -46,11 +56,15 @@ main() {
     Pillow* retrying-* pyparsing-* numpy-* SQLAlchemy-* pandas-* pandasql-* matplotlib-* plotly-* pybedtools-*
     cd ~
 
+    echo ""
+    echo "PIP FREEZE"
+    ./miniconda3/bin/pip freeze
+
     echo "Finished setup. Beginning analysis."
     echo "Annotating bed file."
 
     # annotate bed file
-    bash ./athena-development/bin/annotate_bed.sh -i "$panel_bed_name" -g "$exons_nirvana_name" -b "$pb_bed_name"
+    bash $athena_dir/bin/annotate_bed.sh -i "$panel_bed_name" -g "$exons_nirvana_name" -b "$pb_bed"
     annotated_bed=$(find . -name "*_annotated.bed")
 
     # if sample naming given replace spaces with "_"
@@ -60,7 +74,7 @@ main() {
     stats_args=""
 
     if [ "$thresholds" ]; then stats_args+=" --thresholds $thresholds"; fi
-    if [ "$build_name" ]; then stats_args+=" --build $build_name"; fi
+    if [ "$build_name" ]; then stats_args+=" --build $build"; fi
     if [ "$name" ]; then stats_args+=" --outfile ${name}"; fi
     
     stats_cmd="--file $annotated_bed"
@@ -68,10 +82,10 @@ main() {
     echo "Generating coverage stats with: " $stats_cmd
     
     # generate single sample stats
-    time ./miniconda3/bin/python ./athena-development/bin/coverage_stats_single.py $stats_cmd
+    time ./miniconda3/bin/python ./$athena_dir/bin/coverage_stats_single.py $stats_cmd
         
-    exon_stats=$(find ./athena-development/output/ -name "*exon_stats.tsv")
-    gene_stats=$(find ./athena-development/output/ -name "*gene_stats.tsv")
+    exon_stats=$(find ${athena_dir}/output/ -name "*exon_stats.tsv")
+    gene_stats=$(find ${athena_dir}/output/ -name "*gene_stats.tsv")
 
     # build string of inputs for report script
     report_args=""
@@ -85,14 +99,14 @@ main() {
         report_args+=" --snps $snp_vcfs";
     fi
 
-    report_cmd="./athena-development/bin/coverage_report_single.py --exon_stats $exon_stats --gene_stats $gene_stats --raw_coverage $annotated_bed --limit $limit"
+    report_cmd="$athena_dir/bin/coverage_report_single.py --exon_stats $exon_stats --gene_stats $gene_stats --raw_coverage $annotated_bed --limit $limit"
     report_cmd+=$report_args
     echo "Generating report with: " $report_cmd
 
-    # generate report
+    # generapythonte report
     time ./miniconda3/bin/python $report_cmd
     
-    report=$(find ./athena-development/output/ -name "*coverage_report.html")
+    report=$(find ${athena_dir}/output/ -name "*coverage_report.html")
 
     echo "Completed. Uploading files"
 

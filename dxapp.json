@@ -34,14 +34,14 @@
       "help": ""
     },
     {
-      "name": "pb_bed",
-      "label": "Per base coverage bed file (output from mosdepth)",
-      "class": "file",
+      "name": "mosdepth_files",
+      "label": "Array of files output from mosdepth.",
+      "class": "array:file",
       "optional": false,
       "patterns": [
         "*"
       ],
-      "help": ""
+      "help": "Array of eggd_mosdepth output files, uses per base bed and reference build txt file."
     },
     {
       "name": "thresholds",
@@ -52,13 +52,11 @@
       "help": ""
     },
     {
-      "name": "build",
-      "label": "Reference build text file (output from mosdepth)",
-      "class": "file",
+      "name": "cutoff_threshold",
+      "label": "Threshold to define sub-optimal coverage",
+      "class": "int",
       "optional": true,
-      "patterns": [
-        "*"
-      ],
+      "default": 20,
       "help": ""
     },
     {
@@ -66,14 +64,6 @@
       "label": "Sample name, used in report and for naming output files",
       "class": "string",
       "optional": true,
-      "help": ""
-    },
-    {
-      "name": "cutoff_threshold",
-      "label": "Threshold to define sub-optimal coverage",
-      "class": "int",
-      "optional": true,
-      "default": 20,
       "help": ""
     },
     {
