@@ -15,7 +15,7 @@ main() {
         dx download "${mosdepth_files[$i]}"
     done
 
-    # set per base and build files from downloaded mosdepth output
+    # set per base and build files from downloaded mosdepth file array
     pb_bed=$(find . -name "*.per-base.bed.gz")
     build=$(find . -name "*.reference_build.txt")
 
@@ -46,7 +46,7 @@ main() {
     # untar athena and install requirements
     # should include tar of athena from releases
     tar -xf athena-*.tar.gz
-    # mv athena $athena_dir
+    mv athena $athena_dir
     sudo chmod -R 775 $athena_dir
     
     # install required python packages from local packages dir
