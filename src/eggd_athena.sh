@@ -16,6 +16,8 @@ main() {
     done
 
     # set per base and build files from downloaded mosdepth file array
+    # if this is run with just per-base bed file in the array, build will
+    # evaluate to an empty string and not be passed into the report script
     pb_bed=$(find . -name "*.per-base.bed.gz")
     build=$(find . -name "*.reference_build.txt")
 
