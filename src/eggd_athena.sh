@@ -48,19 +48,17 @@ main() {
     # untar athena and install requirements
     # should include tar of athena from releases
     tar -xf athena-*.tar.gz
-    mv athena $athena_dir
+
+    # -development tars get untarred to "athena", releases to "athena-release_ver"
+    if test -d ./athena; then mv athena $athena_dir; fi
     sudo chmod -R 775 $athena_dir
-    
+
     # install required python packages from local packages dir
     echo "Installing python packages"
     cd packages
     ~/miniconda3/bin/pip install -q certifi-* MarkupSafe-* pytz-* python_dateutil-* pysam-* cycler-* Jinja2-* kiwisolver-* \
     Pillow* retrying-* pyparsing-* numpy-* SQLAlchemy-* pandas-* pandasql-* matplotlib-* plotly-* pybedtools-*
     cd ~
-
-    echo ""
-    echo "PIP FREEZE"
-    ./miniconda3/bin/pip freeze
 
     echo "Finished setup. Beginning analysis."
     echo "Annotating bed file."
