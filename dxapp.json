@@ -14,7 +14,7 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.bed"
       ],
       "help": ""
     },
@@ -88,7 +88,7 @@
       "class": "array:file",
       "optional": true,
       "patterns": [
-        "*"
+        "*.vcf*"
       ],
       "help": ""
     }

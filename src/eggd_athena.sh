@@ -23,7 +23,6 @@ main() {
 
     # download SNPs if given to SNPs dir
     mkdir snps && cd snps
-    
     for i in "${!snps[@]}"
     do
         dx download "${snps[$i]}"
@@ -76,14 +75,14 @@ main() {
     if [ "$thresholds" ]; then stats_args+=" --thresholds $thresholds"; fi
     if [ "$build_name" ]; then stats_args+=" --build $build"; fi
     if [ "$name" ]; then stats_args+=" --outfile ${name}"; fi
-    
+
     stats_cmd="--file $annotated_bed"
     stats_cmd+=$stats_args
     echo "Generating coverage stats with: " $stats_cmd
-    
+
     # generate single sample stats
     time ./miniconda3/bin/python ./$athena_dir/bin/coverage_stats_single.py $stats_cmd
-        
+ 
     exon_stats=$(find ${athena_dir}/output/ -name "*exon_stats.tsv")
     gene_stats=$(find ${athena_dir}/output/ -name "*gene_stats.tsv")
 
@@ -105,7 +104,7 @@ main() {
 
     # generapythonte report
     time ./miniconda3/bin/python $report_cmd
-    
+
     report=$(find ${athena_dir}/output/ -name "*coverage_report.html")
 
     echo "Completed. Uploading files"
