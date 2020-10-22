@@ -102,7 +102,7 @@ main() {
     report_cmd+=$report_args
     echo "Generating report with: " $report_cmd
 
-    # generapythonte report
+    # generate report
     time ./miniconda3/bin/python $report_cmd
 
     report=$(find ${athena_dir}/output/ -name "*coverage_report.html")
