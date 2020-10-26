@@ -1,6 +1,6 @@
 {
-  "name": "eggd_athena_v1.0.0",
-  "title": "eggd_athena_v1.0.0",
+  "name": "athena_v1.0.1",
+  "title": "athena_v1.0.1",
   "summary": "DNAnexus app of Athena",
   "dxapi": "1.0.0",
   "properties": {
