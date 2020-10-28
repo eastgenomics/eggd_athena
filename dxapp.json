@@ -94,10 +94,10 @@
     },
     {
       "name": "summary",
-      "label": "Clinical report summary",
+      "label": "Report summary",
       "class": "boolean",
       "default": false,
-      "help": "Display clinical report summary text in summary section. Default: False"
+      "help": "Display summary of genes / transcripts in report in summary section. Default: False"
     }
   ],
   "outputSpec": [
