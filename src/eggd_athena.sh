@@ -66,8 +66,9 @@ main() {
     bash $athena_dir/bin/annotate_bed.sh -i "$panel_bed_name" -g "$exons_nirvana_name" -b "$pb_bed"
     annotated_bed=$(find . -name "*_annotated.bed")
 
-    # if sample naming given replace spaces with "_"
+    # if sample naming given replace spaces with "_" and "/" with "-"
     if [ "$name" ]; then name=${name// /_}; fi
+    if [ "$name" ]; then name=${name//\//-}; fi
 
     # build string of inputs to pass to stats script
     stats_args=""
@@ -92,6 +93,7 @@ main() {
     if [ "$cutoff_threshold" ]; then report_args+=" --threshold $cutoff_threshold"; fi
     if [ "$name" ]; then report_args+=" --sample_name $name"; fi
     if [ "$panel" = true ]; then report_args+=" --panel $panel_bed_name"; fi
+    if [ "$summary" = true ]; then report_args+=" --summary"; fi
     if [ "${!snps[@]}" ]; then 
         snp_vcfs=$(find ~/snps/ -name "*.vcf")
         echo $snp_vcfs
