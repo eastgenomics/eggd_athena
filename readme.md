@@ -31,7 +31,7 @@ Optional inputs:
 - snps: VCF(s) of SNPs for which to calculate coverage for (i.e. HGMD, ClinVar)
 - limit: number of genes in panel at which to not generate full gene plots, for large panels this may take a long time and make the reports unuseably large.
 - panel: boolean option to display panel used in report (default: True)
-- summary: boolean option to includ clinical report summary in report (default: False)
+- summary: boolean option to include clinical report summary in report (default: False)
 
 <br>
 
