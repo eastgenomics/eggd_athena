@@ -1,11 +1,11 @@
 {
-  "name": "athena_v1.0.1",
-  "title": "athena_v1.0.1",
+  "name": "athena_v1.0.2",
+  "title": "athena_v1.0.2",
   "summary": "DNAnexus app of Athena",
   "dxapi": "1.0.0",
   "properties": {
-    "githubRelease": "v1.0.1",
-    "athenaRelease": "v1.0.2"
+    "githubRelease": "v1.0.2",
+    "athenaRelease": "v1.0.4"
     },
   "inputSpec": [
     {
@@ -91,6 +91,13 @@
         "*.vcf*"
       ],
       "help": ""
+    },
+    {
+      "name": "summary",
+      "label": "Report summary",
+      "class": "boolean",
+      "default": false,
+      "help": "Display summary of genes / transcripts in report in summary section. Default: False"
     }
   ],
   "outputSpec": [
