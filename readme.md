@@ -22,6 +22,9 @@ Required inputs:
 - Per base coverage BED file (output from mosdepth)
 - Exons nirvana (exon annotation file; generated from Illumina Nirvana RefSeq gff file)
 
+n.b. check [Athena][athena-url] readme for required formats of input files, specific formatting is required and if not correct will result in errors / empty files being generated.
+The use of 'chr' prefix MUST also be consistent between the panel bed file, mosdepth output and exon annotation file. If not this will result in errors with Bedtools and empty files being generated.
+
 Optional inputs:
 
 - thresholds: thresholds at which to calculate coverage (default: 10, 20, 30, 50, 100)
