@@ -1,11 +1,11 @@
 {
-  "name": "athena_v1.0.2",
-  "title": "athena_v1.0.2",
+  "name": "athena_v1.0.3",
+  "title": "athena_v1.0.3",
   "summary": "DNAnexus app of Athena",
   "dxapi": "1.0.0",
   "properties": {
-    "githubRelease": "v1.0.2",
-    "athenaRelease": "v1.0.4"
+    "githubRelease": "v1.0.3",
+    "athenaRelease": "v1.0.5"
     },
   "inputSpec": [
     {
