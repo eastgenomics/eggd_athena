@@ -1,5 +1,5 @@
 #!/bin/bash
-# eggd_athena 1.0.3
+# eggd_athena
 
 set -exo pipefail
 
