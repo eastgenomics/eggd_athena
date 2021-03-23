@@ -1,11 +1,11 @@
 {
-  "name": "athena_v1.1.1",
-  "title": "athena_v1.1.1",
+  "name": "athena_v1.1.2",
+  "title": "athena_v1.1.2",
   "summary": "DNAnexus app of Athena",
   "dxapi": "1.0.0",
   "properties": {
-    "githubRelease": "v1.1.1",
-    "athenaRelease": "v1.1.0"
+    "githubRelease": "v1.1.2",
+    "athenaRelease": "v1.1.1"
     },
   "inputSpec": [
     {
@@ -141,7 +141,7 @@
   "runSpec": {
     "timeoutPolicy": {
       "*": {
-        "hours": 6
+        "hours": 4
       }
     },
     "interpreter": "bash",
