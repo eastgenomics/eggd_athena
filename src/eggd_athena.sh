@@ -60,16 +60,20 @@ main() {
     cd ~
 
     echo "Finished setup. Beginning analysis."
-    echo "Annotating bed file."
-
-    # annotate bed file
-    bash $athena_dir/bin/annotate_bed.sh -i "$panel_bed_name" -g "$exons_nirvana_name" -b "$pb_bed"
-    annotated_bed=$(find . -name "*_annotated.bed")
 
     # if sample naming given replace spaces with "_" and "/" with "-"
     if [ "$name" ]; then name=${name// /_}; fi
     if [ "$name" ]; then name=${name//\//-}; fi
 
+    # annotate bed file
+    annotate_args = "--panel_bed $panel_bed_name --transcript_file $exons_nirvana_name --coverage_file $pb_bed"
+    if [ "$name" ]; then annotate_args+=" --output_name $name"
+    echo "Performing bed file annotation with following arguments: " $annotate_args
+
+    time ./miniconda3/bin/python ./$athena_dir/bin/annotate_bed.py $annotate_args
+    annotated_bed=$(find . -name "*_annotated.bed")
+    
+    
     # build string of inputs to pass to stats script
     stats_args=""
 
