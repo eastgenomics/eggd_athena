@@ -20,10 +20,10 @@ Required inputs:
 
 - Panel BED file
 - Per base coverage BED file (output from mosdepth)
-- Exons nirvana (exon annotation file; generated from Illumina Nirvana RefSeq gff file)
+- Exons nirvana (exon annotation file; originally generated from Illumina Nirvana RefSeq gff file, analogous file can be created by following instructions [here][transcript-file-url])
 
 n.b. check [Athena][athena-url] readme for required formats of input files, specific formatting is required and if not correct will result in errors / empty files being generated.
-The use of 'chr' prefix MUST also be consistent between the panel bed file, mosdepth output and exon annotation file. If not this will result in errors with Bedtools and empty files being generated.
+
 
 Optional inputs:
 
@@ -32,7 +32,7 @@ Optional inputs:
 - name: sample name, used to name output files and within report title. If not given this will be parsed from the per base coverage bed.
 - cutoff threshold: threshold at which to define sub-optimal coverage (must be one of the threshold values; default: 20)
 - snps: VCF(s) of SNPs for which to calculate coverage for (i.e. HGMD, ClinVar)
-- limit: number of genes in panel at which to not generate full gene plots, for large panels this may take a long time and make the reports unuseably large.
+- limit: number of genes in panel at which to not generate full gene plots, for large panels this may take a long time and will result in larger output report file size.
 - panel: boolean option to display panel used in report (default: True)
 - summary: boolean option to include summary of genes / transcripts used in report (default: False)
 
@@ -50,3 +50,4 @@ Optional inputs:
 
 [athena-url]: https://github.com/eastgenomics/athena
 [eggd_mosdepth-url]: https://github.com/eastgenomics/eggd_mosdepth
+[transcript-file-url]: https://cuhbioinformatics.atlassian.net/wiki/spaces/P/pages/2241101840/Generating+transcripts+file+for+Athena
