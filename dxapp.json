@@ -1,11 +1,12 @@
 {
-  "name": "athena_v1.2.2",
-  "title": "athena_v1.2.2",
+  "name": "eggd_athena",
+  "title": "eggd_athena",
   "summary": "DNAnexus app of Athena",
   "dxapi": "1.0.0",
+  "billTo": "org-emee_1",
   "properties": {
-    "githubRelease": "v1.2.2",
-    "athenaRelease": "v1.2.1"
+    "githubRelease": "v1.3.0",
+    "athenaRelease": "v1.3.0"
     },
   "inputSpec": [
     {
