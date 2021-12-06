@@ -102,7 +102,7 @@ main() {
         echo $snp_vcfs
         report_args+=" --snps $snp_vcfs";
     fi
-    if [ "$per_base_coverage" ]; then report_args+=" --per_base_coverage $pb_bed"; fi
+    if [ "$per_chromosome_coverage" ]; then report_args+=" --per_base_coverage $pb_bed"; fi
 
     report_cmd="$athena_dir/bin/coverage_report_single.py --exon_stats $exon_stats --gene_stats $gene_stats --raw_coverage $annotated_bed --limit $limit"
     report_cmd+=$report_args
