@@ -1,12 +1,22 @@
 {
-  "name": "athena_v1.2.2",
-  "title": "athena_v1.2.2",
+  "name": "eggd_athena",
+  "title": "eggd_athena",
   "summary": "DNAnexus app of Athena",
   "dxapi": "1.0.0",
+  "billTo": "org-emee_1",
+  "version": "1.3.0",
   "properties": {
-    "githubRelease": "v1.2.2",
-    "athenaRelease": "v1.2.1"
+    "githubRelease": "v1.3.0",
+    "athenaRelease": "v1.3.0"
     },
+  "authorizedUsers": [
+      "org-emee_1",
+      "user-spaul4"
+  ],
+  "developers": [
+      "org-emee_1",
+      "user-spaul4"
+  ],
   "inputSpec": [
     {
       "name": "panel_bed",
@@ -43,6 +53,13 @@
         "*"
       ],
       "help": "Array of eggd_mosdepth output files, uses per base bed and reference build txt file."
+    },
+    {
+        "name": "per_chromosome_coverage",
+        "label": "Include per-chromosome coverage plots.",
+        "class": "boolean",
+        "default": false,
+        "help": ""
     },
     {
       "name": "thresholds",

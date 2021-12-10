@@ -16,7 +16,7 @@ Used to generate coverage reports to assess coverage of genomic regions defined 
 
 ## What data are required for this app to run?
 
-Required inputs:
+### Required inputs:
 
 - Panel BED file
 - Per base coverage BED file (output from mosdepth)
@@ -25,7 +25,7 @@ Required inputs:
 n.b. check [Athena][athena-url] readme for required formats of input files, specific formatting is required and if not correct will result in errors / empty files being generated.
 
 
-Optional inputs:
+### Optional inputs:
 
 - thresholds: thresholds at which to calculate coverage (default: 10, 20, 30, 50, 100)
 - build: text file containing reference build used for alignment (as output from [eggd_mosdepth][eggd_mosdepth-url])
@@ -35,7 +35,7 @@ Optional inputs:
 - limit: number of genes in panel at which to not generate full gene plots, for large panels this may take a long time and will result in larger output report file size.
 - panel: boolean option to display panel used in report (default: True)
 - summary: boolean option to include summary of genes / transcripts used in report (default: False)
-
+- per_chromosome_coverage: boolean option to include global per-chromosome coverage plots in report (default: False)
 <br>
 
 ## What does this app output?
