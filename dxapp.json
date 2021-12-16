@@ -4,9 +4,9 @@
   "summary": "DNAnexus app of Athena",
   "dxapi": "1.0.0",
   "billTo": "org-emee_1",
-  "version": "1.3.1",
+  "version": "1.3.0",
   "properties": {
-    "githubRelease": "v1.3.1",
+    "githubRelease": "v1.3.0",
     "athenaRelease": "v1.3.0"
     },
   "authorizedUsers": [
