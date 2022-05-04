@@ -48,7 +48,7 @@ main() {
 
     # install required python packages from local packages dir
     echo "Installing python packages"
-    sudo -H python3 -m pip install --no-index --no-deps packages/*
+    time sudo -H python3 -m pip install --no-index --no-deps packages/*
 
     echo "Finished setup. Beginning analysis."
 
