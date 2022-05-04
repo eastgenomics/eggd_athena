@@ -7,7 +7,7 @@ main() {
 
     # download inputs
     dx download "$panel_bed"
-    dx download "$exons_nirvana"
+    dx download "$exons_file"
 
     # download mosdepth files
     for i in "${!mosdepth_files[@]}"
@@ -57,7 +57,7 @@ main() {
     if [ "$name" ]; then name=${name//\//-}; fi
 
     # build string of args and annotate bed file
-    annotate_args="--chunk_size 20000000 --panel_bed $panel_bed_name --transcript_file $exons_nirvana_name --coverage_file $pb_bed"
+    annotate_args="--chunk_size 20000000 --panel_bed $panel_bed_name --transcript_file $exons_file_name --coverage_file $pb_bed"
     if [ "$name" ]; then annotate_args+=" --output_name $name"; fi
     echo "Performing bed file annotation with following arguments: " $annotate_args
 
