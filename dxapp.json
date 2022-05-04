@@ -3,7 +3,7 @@
   "title": "eggd_athena",
   "summary": "DNAnexus app of Athena",
   "dxapi": "1.0.0",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "properties": {
     "githubRelease": "v1.4.0",
     "athenaRelease": "v1.4.0"
