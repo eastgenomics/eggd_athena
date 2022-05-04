@@ -10,10 +10,12 @@
     },
   "authorizedUsers": [
       "org-emee_1",
+      "user-rainfoj",
       "user-spaul4"
   ],
   "developers": [
       "org-emee_1",
+      "user-rainfoj",
       "user-spaul4"
   ],
   "inputSpec": [
@@ -28,8 +30,8 @@
       "help": ""
     },
     {
-      "name": "exons_nirvana",
-      "label": "Exons nirvana file (from 001_References)",
+      "name": "exons_file",
+      "label": "Exons file defining gene names and exon numbers for all transcripts / regions (from 001_References)",
       "class": "file",
       "optional": false,
       "suggestions": [
