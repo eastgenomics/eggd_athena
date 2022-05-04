@@ -164,6 +164,14 @@
   "access": {
     "project": "CONTRIBUTE"
   },
+  "assetDepends": [
+    {
+      "name": "bedtools",
+      "project": "project-Fkb6Gkj433GVVvj73J7x8KbV",
+      "folder": "/app_assets/bedtools/bedtools_v2.30.0",
+      "version": "2.30.0"
+    }
+  ],
   "regionalOptions": {
     "aws:eu-central-1": {
       "systemRequirements": {
