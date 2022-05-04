@@ -22,23 +22,17 @@ main() {
     build=$(find . -name "*.reference_build.txt")
 
     # download SNPs if given to SNPs dir
-    mkdir snps && cd snps
+    mkdir snps
     for i in "${!snps[@]}"
     do
-        dx download "${snps[$i]}"
+        dx download "${snps[$i]}" -o snps/
     done
-
-    cd ~/
 
     # set up bedtools
     gunzip bedtools.static.binary.gz
     mv bedtools.static.binary bedtools
     chmod a+x bedtools
     sudo mv bedtools /usr/local/bin
-
-    # install python3.8
-    gunzip Miniconda3-latest-Linux-x86_64.sh.gz
-    bash ~/Miniconda3-latest-Linux-x86_64.sh -b
 
     # get athena name with version from downloaded tar
     athena_dir=$(find . -name athena-*)
@@ -54,10 +48,7 @@ main() {
 
     # install required python packages from local packages dir
     echo "Installing python packages"
-    cd packages
-    ~/miniconda3/bin/pip install -q certifi-* MarkupSafe-* pytz-* python_dateutil-* pysam-* cycler-* Jinja2-* kiwisolver-* \
-    Pillow* retrying-* pyparsing-* numpy-* SQLAlchemy-* pandas-* pandasql-* matplotlib-* plotly-* pybedtools-*
-    cd ~
+    sudo -H python3 -m pip install --no-index --no-deps packages/*
 
     echo "Finished setup. Beginning analysis."
 
@@ -70,9 +61,9 @@ main() {
     if [ "$name" ]; then annotate_args+=" --output_name $name"; fi
     echo "Performing bed file annotation with following arguments: " $annotate_args
 
-    time ./miniconda3/bin/python ./$athena_dir/bin/annotate_bed.py $annotate_args
+    time python3 ./$athena_dir/bin/annotate_bed.py $annotate_args
     annotated_bed=$(find . -name "*_annotated.bed")
-    
+
     # build string of inputs to pass to stats script
     stats_args=""
 
@@ -85,8 +76,8 @@ main() {
     echo "Generating coverage stats with: " $stats_cmd
 
     # generate single sample stats
-    time ./miniconda3/bin/python ./$athena_dir/bin/coverage_stats_single.py $stats_cmd
- 
+    time python3 ./$athena_dir/bin/coverage_stats_single.py $stats_cmd
+
     exon_stats=$(find ${athena_dir}/output/ -name "*exon_stats.tsv")
     gene_stats=$(find ${athena_dir}/output/ -name "*gene_stats.tsv")
 
@@ -97,7 +88,7 @@ main() {
     if [ "$name" ]; then report_args+=" --sample_name $name"; fi
     if [ "$panel" = true ]; then report_args+=" --panel $panel_bed_name"; fi
     if [ "$summary" = true ]; then report_args+=" --summary"; fi
-    if [ "${!snps[@]}" ]; then 
+    if [ "${!snps[@]}" ]; then
         snp_vcfs=$(find ~/snps/ -name "*.vcf")
         echo $snp_vcfs
         report_args+=" --snps $snp_vcfs";
@@ -108,7 +99,7 @@ main() {
     echo "Generating report with: " $report_cmd
 
     # generate report
-    time ./miniconda3/bin/python $report_cmd
+    time python3 $report_cmd
 
     report=$(find ${athena_dir}/output/ -name "*coverage_report.html")
 
