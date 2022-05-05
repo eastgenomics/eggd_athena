@@ -28,6 +28,12 @@ main() {
         dx download "${snps[$i]}" -o snps/
     done
 
+    # set up bedtools
+    gunzip bedtools.static.binary.gz
+    mv bedtools.static.binary bedtools
+    chmod a+x bedtools
+    sudo mv bedtools /usr/local/bin
+
     # get athena name with version from downloaded tar
     athena_dir=$(find . -name athena-*)
     athena_dir=${athena_dir/.tar.gz/}
@@ -97,12 +103,16 @@ main() {
 
     report=$(find ${athena_dir}/output/ -name "*coverage_report.html")
 
+    # compress annotated bed since it can be large
+    gzip "$annotated_bed"
+    annotated_bed_gz="${annotated_bed}.gz"
+
     echo "Completed. Uploading files"
 
     exon_stats=$(dx upload $exon_stats --brief)
     gene_stats=$(dx upload $gene_stats --brief)
     report=$(dx upload $report --brief)
-    annotated_bed=$(dx upload $annotated_bed --brief)
+    annotated_bed=$(dx upload $annotated_bed_gz --brief)
 
     dx-jobutil-add-output exon_stats "$exon_stats" --class=file
     dx-jobutil-add-output gene_stats "$gene_stats" --class=file
