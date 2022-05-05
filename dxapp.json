@@ -6,7 +6,7 @@
   "version": "1.4.0",
   "properties": {
     "githubRelease": "v1.4.0",
-    "athenaRelease": "v1.4.0"
+    "athenaRelease": "v1.4.1"
     },
   "authorizedUsers": [
       "org-emee_1",
