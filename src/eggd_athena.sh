@@ -28,12 +28,6 @@ main() {
         dx download "${snps[$i]}" -o snps/
     done
 
-    # set up bedtools
-    gunzip bedtools.static.binary.gz
-    mv bedtools.static.binary bedtools
-    chmod a+x bedtools
-    sudo mv bedtools /usr/local/bin
-
     # get athena name with version from downloaded tar
     athena_dir=$(find . -name athena-*)
     athena_dir=${athena_dir/.tar.gz/}
