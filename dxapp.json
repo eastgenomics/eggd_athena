@@ -56,6 +56,13 @@
       "help": "Array of eggd_mosdepth output files, uses per base bed and reference build txt file."
     },
     {
+        "name": "per_chromosome_coverage",
+        "label": "Include per-chromosome coverage plots.",
+        "class": "boolean",
+        "default": false,
+        "help": ""
+    },
+    {
       "name": "thresholds",
       "label": "String of comma seperated thresholds at which to calculate coverage",
       "class": "string",
