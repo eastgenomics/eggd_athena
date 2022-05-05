@@ -89,7 +89,7 @@ main() {
     if [ "$panel" = true ]; then report_args+=" --panel $panel_bed_name"; fi
     if [ "$summary" = true ]; then report_args+=" --summary"; fi
     if [ "${!snps[@]}" ]; then
-        snp_vcfs=$(find ~/snps/ -name "*.vcf")
+        snp_vcfs=$(find ~/snps/ -name "*.vcf*")
         echo $snp_vcfs
         report_args+=" --snps $snp_vcfs";
     fi
