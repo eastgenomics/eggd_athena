@@ -7,7 +7,7 @@ main() {
 
     # download inputs
     dx download "$panel_bed"
-    dx download "$exons_nirvana"
+    dx download "$exons_file"
 
     # download mosdepth files
     for i in "${!mosdepth_files[@]}"
@@ -22,23 +22,17 @@ main() {
     build=$(find . -name "*.reference_build.txt")
 
     # download SNPs if given to SNPs dir
-    mkdir snps && cd snps
+    mkdir snps
     for i in "${!snps[@]}"
     do
-        dx download "${snps[$i]}"
+        dx download "${snps[$i]}" -o snps/
     done
-
-    cd ~/
 
     # set up bedtools
     gunzip bedtools.static.binary.gz
     mv bedtools.static.binary bedtools
     chmod a+x bedtools
     sudo mv bedtools /usr/local/bin
-
-    # install python3.8
-    gunzip Miniconda3-latest-Linux-x86_64.sh.gz
-    bash ~/Miniconda3-latest-Linux-x86_64.sh -b
 
     # get athena name with version from downloaded tar
     athena_dir=$(find . -name athena-*)
@@ -54,10 +48,7 @@ main() {
 
     # install required python packages from local packages dir
     echo "Installing python packages"
-    cd packages
-    ~/miniconda3/bin/pip install -q certifi-* MarkupSafe-* pytz-* python_dateutil-* pysam-* cycler-* Jinja2-* kiwisolver-* \
-    Pillow* retrying-* pyparsing-* numpy-* SQLAlchemy-* pandas-* pandasql-* matplotlib-* plotly-* pybedtools-*
-    cd ~
+    time sudo -H python3 -m pip install --no-index --no-deps packages/*
 
     echo "Finished setup. Beginning analysis."
 
@@ -66,13 +57,13 @@ main() {
     if [ "$name" ]; then name=${name//\//-}; fi
 
     # build string of args and annotate bed file
-    annotate_args="--chunk_size 20000000 --panel_bed $panel_bed_name --transcript_file $exons_nirvana_name --coverage_file $pb_bed"
+    annotate_args="--chunk_size 20000000 --panel_bed $panel_bed_name --transcript_file $exons_file_name --coverage_file $pb_bed"
     if [ "$name" ]; then annotate_args+=" --output_name $name"; fi
     echo "Performing bed file annotation with following arguments: " $annotate_args
 
-    time ./miniconda3/bin/python ./$athena_dir/bin/annotate_bed.py $annotate_args
+    time python3 ./$athena_dir/bin/annotate_bed.py $annotate_args
     annotated_bed=$(find . -name "*_annotated.bed")
-    
+
     # build string of inputs to pass to stats script
     stats_args=""
 
@@ -85,8 +76,8 @@ main() {
     echo "Generating coverage stats with: " $stats_cmd
 
     # generate single sample stats
-    time ./miniconda3/bin/python ./$athena_dir/bin/coverage_stats_single.py $stats_cmd
- 
+    time python3 ./$athena_dir/bin/coverage_stats_single.py $stats_cmd
+
     exon_stats=$(find ${athena_dir}/output/ -name "*exon_stats.tsv")
     gene_stats=$(find ${athena_dir}/output/ -name "*gene_stats.tsv")
 
@@ -97,8 +88,8 @@ main() {
     if [ "$name" ]; then report_args+=" --sample_name $name"; fi
     if [ "$panel" = true ]; then report_args+=" --panel $panel_bed_name"; fi
     if [ "$summary" = true ]; then report_args+=" --summary"; fi
-    if [ "${!snps[@]}" ]; then 
-        snp_vcfs=$(find ~/snps/ -name "*.vcf")
+    if [ "${!snps[@]}" ]; then
+        snp_vcfs=$(find ~/snps/ -name "*.vcf*")
         echo $snp_vcfs
         report_args+=" --snps $snp_vcfs";
     fi
@@ -110,16 +101,20 @@ main() {
     echo "Generating report with: " $report_cmd
 
     # generate report
-    time ./miniconda3/bin/python $report_cmd
+    time python3 $report_cmd
 
     report=$(find ${athena_dir}/output/ -name "*coverage_report.html")
+
+    # compress annotated bed since it can be large
+    gzip "$annotated_bed"
+    annotated_bed_gz="${annotated_bed}.gz"
 
     echo "Completed. Uploading files"
 
     exon_stats=$(dx upload $exon_stats --brief)
     gene_stats=$(dx upload $gene_stats --brief)
     report=$(dx upload $report --brief)
-    annotated_bed=$(dx upload $annotated_bed --brief)
+    annotated_bed=$(dx upload $annotated_bed_gz --brief)
 
     dx-jobutil-add-output exon_stats "$exon_stats" --class=file
     dx-jobutil-add-output gene_stats "$gene_stats" --class=file
