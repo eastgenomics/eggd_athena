@@ -3,10 +3,10 @@
   "title": "eggd_athena",
   "summary": "DNAnexus app of Athena",
   "dxapi": "1.0.0",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "properties": {
-    "githubRelease": "v1.4.0",
-    "athenaRelease": "v1.4.1"
+    "githubRelease": "v1.5.0",
+    "athenaRelease": "v1.5.0"
     },
   "authorizedUsers": [
       "org-emee_1",
@@ -99,6 +99,12 @@
       "class": "boolean",
       "default": true,
       "help": "Display panel(s) / gene(s) from name of panel bed file. Default: True"
+    },
+    {
+      "name": "panel_filters",
+      "label": "panle filters",
+      "class": "string",
+      "help": "Drop down gene panel filters for full gene plots, should be given as panel1:gene1,gene2,gene3"
     },
     {
       "name": "snps",
