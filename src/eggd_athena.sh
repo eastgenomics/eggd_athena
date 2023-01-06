@@ -62,7 +62,7 @@ main() {
     echo "Performing bed file annotation with following arguments: " $annotate_args
 
     time python3 ./$athena_dir/bin/annotate_bed.py $annotate_args
-    annotated_bed=$(find . -name "*_annotated.bed")
+    annotated_bed=$(find ${athena_dir}/output/ -name "*_annotated.bed")
 
     # build string of inputs to pass to stats script
     stats_args=""
@@ -87,6 +87,7 @@ main() {
     if [ "$cutoff_threshold" ]; then report_args+=" --threshold $cutoff_threshold"; fi
     if [ "$name" ]; then report_args+=" --sample_name $name"; fi
     if [ "$panel" = true ]; then report_args+=" --panel $panel_bed_name"; fi
+    if [ "$panel_filters" ]; then report_args+=" --panel_filters ${panel_filters} "; fi
     if [ "$summary" = true ]; then report_args+=" --summary"; fi
     if [ "${!snps[@]}" ]; then
         snp_vcfs=$(find ~/snps/ -name "*.vcf*")
