@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This repository is no longer maintained and the DNAnexus app code has been migrated into the [Athena repository](https://github.com/eastgenomics/athena)
+
 <!-- dx-header -->
 # Athena (DNAnexus Platform App)
 
